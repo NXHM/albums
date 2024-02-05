@@ -21,12 +21,6 @@ private val DarkColorScheme = darkColorScheme(
         secondary = PurpleGrey80,
         tertiary = Color.Red,
         onBackground = Color.White,
-        val brush = Brush.linearGradient(
-            listOf(
-                Color(14008),
-                Color(3774)
-            )
-        )
 )
 
 private val LightColorScheme = lightColorScheme(
@@ -47,7 +41,7 @@ private val LightColorScheme = lightColorScheme(
 )
 
 @Composable
-fun JetpackComposeTutorialTheme(
+fun album(
         darkTheme: Boolean = isSystemInDarkTheme(),
         // Dynamic color is available on Android 12+
         dynamicColor: Boolean = true,

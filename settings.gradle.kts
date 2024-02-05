@@ -13,5 +13,5 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "Jetpack Compose Tutorial"
+rootProject.name = "Album Card"
 include(":app")
