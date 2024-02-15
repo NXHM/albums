@@ -7,28 +7,35 @@ import androidx.activity.compose.setContent
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.height
+//import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
-import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.foundation.verticalScroll
+import androidx.compose.material3.Button
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.setValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavHostController
 import com.example.album_card.ui.theme.album
-import com.example.album_card.R
-
+//import com.example.album_card.AlbumCard
+//import com.example.album_card.AlbumCoverWall
 
 private val messages: List<MyMessage> = listOf(
     MyMessage("Hola1", "negro..."),
@@ -39,12 +46,15 @@ private val messages: List<MyMessage> = listOf(
     MyMessage("Hola6", "negro..."),
     MyMessage("Hola7", "negro..."),
     MyMessage("Hola8", "negro..."),)
+
+private val albumsInfo: MutableList<AlbumInfo> = mutableListOf()
+
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent{
             album {
-                MyMessages(messages)
+                //MyMessages(messages)
             }
         }
     }
@@ -63,31 +73,28 @@ fun MyImage(){
             )
             .size(70.dp)
             .background(
-                brush = Brush
-                .verticalGradient(
-                    colors = listOf(
-                        Color(21, 0, 140),
-                        Color(164, 51, 119)
-                    )
-                )
+                Color(226, 79, 108)
             )
             //.background(Color.Red)
             //.clip(CircleShape)
     )
 }
 data class MyMessage(val title:String, val author:String)
-@Composable
-fun MyMessages(messages: List<MyMessage>){
+//@Composable
+/*fun MyMessages(messages: List<MyMessage>){
     LazyColumn(){
         items(messages){message->
             MyComponent(message)
         }
     }
-}
+}*/
 @Composable
 fun MyTexts(message: MyMessage){
-    Column (modifier=Modifier
-        .padding(8.dp)) {
+    var expanded by remember {mutableStateOf(false)}
+    Column (modifier= Modifier
+        .padding(8.dp)
+        .clickable { expanded = !expanded }
+    ) {
                 MyText(message.title,
                     MaterialTheme.colorScheme.tertiary,
                     MaterialTheme.typography.headlineLarge
@@ -98,25 +105,62 @@ fun MyTexts(message: MyMessage){
                 )
     }
 }
-@Composable
-fun MyComponent(message: MyMessage){
-    Row (modifier= Modifier
-        .background(Color(226, 79, 108))
-        .padding(10.dp)
-    ){
-        MyImage()
-        MyTexts(message)
-    }
-}
+
+
+
+
 @Composable
 fun MyText(text: String,  color: Color, style: androidx.compose.ui.text.TextStyle){
     Text(text, color=color, style=style)
 }
-@Preview(showSystemUi=true)
-@Preview(uiMode= Configuration.UI_MODE_NIGHT_YES)
+
+/*@Composable
+fun HomeScreen(
+    navHostController: NavHostController
+){
+    Column (
+        modifier = Modifier.fillMaxSize(),
+        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.Center
+    ){
+        Button(onClick = { navHostController.navigate("lazy_row_screen") }) {
+            Text(text="Lazy Row")
+        }
+        Spacer(modifier = Modifier.height(30.dp))
+        ("lazy_row_screen")
+        Button(onClick = { navHostController.navigate("lazy_row_screen") }) {
+            Text(text="Lazy Row")
+        }
+        Spacer(modifier = Modifier.height(30.dp))
+        ("lazy_row_screen")
+    }
+}*/
+//@Preview(showSystemUi=true)
+//@Preview(showBackground = true)
+//@Preview(uiMode= Configuration.UI_MODE_NIGHT_YES)
+@Preview()
 @Composable
 fun PreviewTexts() {
     album {
-        MyMessages(messages = messages)
+        //val resources = Resources.getSystem()
+        //val bitmap = BitmapFactory.decodeResource(resources, R.drawable.Contraportada_mas_futuro_que_pasado_juanes)
+        val cover = (R.drawable.portada_mas_futuro_que_pasado_juanes)
+        val backCover = (R.drawable.contraportada_mas_futuro_que_pasado_juanes)
+        //println(cover::class.java.typeName)
+        //println((Image(painter = painterResource(id = R.drawable.portada_mas_futuro_que_pasado_juanes), contentDescription = "portada"))::class.java.typeName)
+        val albumInfo = AlbumInfo(
+            listOf(
+                Color(21, 0, 140),
+                Color(164, 51, 119)
+            ),
+            "Album de prueba descripcion",
+            "Album prueba titulo",
+            cover,
+            backCover
+        )
+        albumsInfo.add(albumInfo)
+        //val imageBitmap = ImageDecoder.decodeBitmap().value
+        AlbumCoverWall(albumsInfo = albumsInfo)
+        //AlbumCard(albumInfo = albumInfo)
     }
 }
