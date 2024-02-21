@@ -1,23 +1,17 @@
 package com.example.album_card
 
-import android.content.res.Configuration
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.height
-//import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.material3.Button
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -25,17 +19,14 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.setValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.navigation.NavHostController
 import com.example.album_card.ui.theme.album
-//import com.example.album_card.AlbumCard
-//import com.example.album_card.AlbumCoverWall
+
 
 private val messages: List<MyMessage> = listOf(
     MyMessage("Hola1", "negro..."),
@@ -55,6 +46,7 @@ class MainActivity : ComponentActivity() {
         setContent{
             album {
                 //MyMessages(messages)
+                PreviewAlbum()
             }
         }
     }
@@ -80,14 +72,7 @@ fun MyImage(){
     )
 }
 data class MyMessage(val title:String, val author:String)
-//@Composable
-/*fun MyMessages(messages: List<MyMessage>){
-    LazyColumn(){
-        items(messages){message->
-            MyComponent(message)
-        }
-    }
-}*/
+
 @Composable
 fun MyTexts(message: MyMessage){
     var expanded by remember {mutableStateOf(false)}
@@ -114,52 +99,42 @@ fun MyText(text: String,  color: Color, style: androidx.compose.ui.text.TextStyl
     Text(text, color=color, style=style)
 }
 
-/*@Composable
-fun HomeScreen(
-    navHostController: NavHostController
-){
-    Column (
-        modifier = Modifier.fillMaxSize(),
-        horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.Center
-    ){
-        Button(onClick = { navHostController.navigate("lazy_row_screen") }) {
-            Text(text="Lazy Row")
-        }
-        Spacer(modifier = Modifier.height(30.dp))
-        ("lazy_row_screen")
-        Button(onClick = { navHostController.navigate("lazy_row_screen") }) {
-            Text(text="Lazy Row")
-        }
-        Spacer(modifier = Modifier.height(30.dp))
-        ("lazy_row_screen")
-    }
-}*/
 //@Preview(showSystemUi=true)
 //@Preview(showBackground = true)
 //@Preview(uiMode= Configuration.UI_MODE_NIGHT_YES)
-@Preview()
+@Preview
 @Composable
-fun PreviewTexts() {
+fun PreviewAlbum() {
     album {
         //val resources = Resources.getSystem()
         //val bitmap = BitmapFactory.decodeResource(resources, R.drawable.Contraportada_mas_futuro_que_pasado_juanes)
         val cover = (R.drawable.portada_mas_futuro_que_pasado_juanes)
         val backCover = (R.drawable.contraportada_mas_futuro_que_pasado_juanes)
         //println(cover::class.java.typeName)
-        //println((Image(painter = painterResource(id = R.drawable.portada_mas_futuro_que_pasado_juanes), contentDescription = "portada"))::class.java.typeName)
         val albumInfo = AlbumInfo(
-            listOf(
+            /*listOf(
                 Color(21, 0, 140),
                 Color(164, 51, 119)
-            ),
+            ),*/
             "Album de prueba descripcion",
             "Album prueba titulo",
             cover,
             backCover
         )
+        val albumInfo2 = AlbumInfo(
+            /*listOf(
+                Color(21, 0, 140),
+                Color(164, 51, 119)
+            ),*/
+            "Album de prueba descripcion",
+            "Album prueba titulo2",
+            cover,
+            backCover
+        )
         albumsInfo.add(albumInfo)
+        albumsInfo.add(albumInfo2)
         //val imageBitmap = ImageDecoder.decodeBitmap().value
+        Log.i("lista: ", albumsInfo.toString())
         AlbumCoverWall(albumsInfo = albumsInfo)
         //AlbumCard(albumInfo = albumInfo)
     }
